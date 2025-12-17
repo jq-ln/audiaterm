@@ -11,8 +11,7 @@
 		"cli": "node ./dist/source/cli.js",
 		"build": "tsc",
 		"dev": "tsc --watch",
-		"pretty": "prettier --write .",
-		"test": "prettier --check . && eslint ."
+		"lint": "eslint source"
 	},
 	"files": [
 		"dist"
@@ -31,7 +30,6 @@
 		"@eslint/js": "^9.39.2",
 		"@sindresorhus/tsconfig": "^8.1.0",
 		"@types/react": "^19.2.7",
-		"@vdemedes/prettier-config": "^2.0.1",
 		"ava": "^6.4.1",
 		"chalk": "^5.2.0",
 		"eslint": "^9.39.2",
@@ -40,10 +38,8 @@
 		"globals": "^16.5.0",
 		"ink-testing-library": "^4.0.0",
 		"jiti": "^2.6.1",
-		"prettier": "^3.7.4",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.3",
 		"typescript-eslint": "^8.50.0"
-	},
-	"prettier": "@vdemedes/prettier-config"
+	}
 }
