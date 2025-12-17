@@ -1,0 +1,49 @@
+{
+	"name": "ink-demo",
+	"version": "0.0.0",
+	"license": "MIT",
+	"bin": "dist/cli.js",
+	"type": "module",
+	"engines": {
+		"node": ">=25"
+	},
+	"scripts": {
+		"cli": "node ./dist/source/cli.js",
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"pretty": "prettier --write .",
+		"test": "prettier --check . && eslint ."
+	},
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"ink": "^6.5.1",
+		"ink-big-text": "^2.0.0",
+		"ink-gradient": "^3.0.0",
+		"ink-select-input": "^6.2.0",
+		"meow": "^14.0.0",
+		"react": "^19.2.3"
+	},
+	"devDependencies": {
+		"@eslint-react/eslint-plugin": "^2.3.13",
+		"@eslint/eslintrc": "^3.3.3",
+		"@eslint/js": "^9.39.2",
+		"@sindresorhus/tsconfig": "^8.1.0",
+		"@types/react": "^19.2.7",
+		"@vdemedes/prettier-config": "^2.0.1",
+		"ava": "^6.4.1",
+		"chalk": "^5.2.0",
+		"eslint": "^9.39.2",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"globals": "^16.5.0",
+		"ink-testing-library": "^4.0.0",
+		"jiti": "^2.6.1",
+		"prettier": "^3.7.4",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.3",
+		"typescript-eslint": "^8.50.0"
+	},
+	"prettier": "@vdemedes/prettier-config"
+}
