@@ -1,0 +1,64 @@
+import { spawn, ChildProcess } from "node:child_process";
+import net, { Socket } from 'net';
+
+const HOST = "127.0.0.1";
+const PORT = 9988
+
+let process: ChildProcess | null = null;
+let socket: Socket | null = null;
+
+function waitForFluidSynth(timeout = 5000): Promise<void> {
+	return new Promise((resolve, reject) => {
+		const start = Date.now();
+
+		function tryConnect() {
+			const sock = new net.Socket();
+			sock.once("connect", () => {
+				sock.destroy();
+				resolve();
+			});
+			sock.once("error", (_err) => {
+				sock.destroy();
+				if (Date.now() - start > timeout) {
+					reject(new Error("Timeout waiting for FluidSynth"));
+				} else {
+					setTimeout(tryConnect, 50); // retry every 50ms
+				}
+			});
+			sock.connect(PORT, HOST);
+		}
+
+		tryConnect();
+	});
+}
+
+export async function startFluidSynth() {
+	process = spawn("fluidsynth", [
+		"--audio-driver=pipewire",
+		"--server",
+		"--no-shell",
+		"-o", "shell.port=9988",
+		"/usr/share/soundfonts/FluidR3_GM.sf2"
+	]);
+
+	await waitForFluidSynth()
+
+	socket = net.createConnection({ host: HOST, port: PORT });
+
+	socket.once("error", (err) => {
+		console.error("[Fluidsynth]: connection failed", err);
+	})
+
+	socket.once("connect", () => {
+		console.log("[Fluidsynth]: connected");
+	})
+}
+
+export function stopFluidSynth() {
+	socket?.end()
+	process?.kill('SIGTERM')
+
+	socket = null;
+	process = null;
+}
+

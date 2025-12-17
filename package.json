@@ -11,6 +11,7 @@
 		"cli": "node ./dist/source/cli.js",
 		"build": "tsc",
 		"dev": "tsc --watch",
+		"test": "ava",
 		"lint": "eslint source"
 	},
 	"files": [
