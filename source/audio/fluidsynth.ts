@@ -60,5 +60,6 @@ export function stopFluidSynth() {
 
 	socket = null;
 	process = null;
+	console.log("[Fluidsynth]: disconnected");
 }
 
