@@ -1,6 +1,6 @@
 import eslintReact from '@eslint-react/eslint-plugin';
 import eslintJs from '@eslint/js';
-import {defineConfig} from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig({
@@ -21,7 +21,6 @@ export default defineConfig({
 		parserOptions: {
 			// Enable project service for better TypeScript integration
 			projectService: true,
-			tsconfigRootDir: import.meta.dirname,
 		},
 	},
 	// Custom rule overrides (modify rule levels or disable rules)
