@@ -1,6 +1,4 @@
-# Ink Project Scaffold
+# Audiaterm
 
-This project contains an updated version of the scaffold provided by `create-ink-app`.
-All dependencies are up to date as of the last commit.
-The scaffold has been migrated to use `eslint.config.ts` (flat config).
-`xo` was removed as a dependency due to incompatibility with flat config.
+A highly-customizable ear-training TUI with a focus on audiation.
+Uses ink for the frontend and runs a fluidsynth server for in-terminal audio.
