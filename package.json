@@ -17,6 +17,7 @@
 		"dist"
 	],
 	"dependencies": {
+		"@types/node": "^25.0.3",
 		"ink": "^6.5.1",
 		"ink-big-text": "^2.0.0",
 		"ink-gradient": "^3.0.0",
