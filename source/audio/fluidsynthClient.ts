@@ -26,7 +26,7 @@ export class FluidSynthClient {
 		return new Promise((resolve: () => void, reject: (err: Error) => void) => {
 			this.socket = net.createConnection({ host: this.host, port: this.port }, () => {
 				console.log('[FluidSynthClient]: Connected');
-				this.sendLine('prog 0 40'); // set the instrument to violin
+				this.sendLine('prog 0 0'); // set the instrument to piano
 				resolve();
 			});
 			this.socket.once("error", (err) => {

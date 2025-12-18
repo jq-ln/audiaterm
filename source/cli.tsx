@@ -11,7 +11,7 @@ async function main() {
 
 	withFullScreen(<App />).start();
 
-	await synthClient.playNotes([60, 64, 67]);
+	await synthClient.playNotes([12]);
 
 	const shutdown = () => {
 		synthClient.disconnect();
