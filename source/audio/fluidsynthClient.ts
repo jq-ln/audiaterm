@@ -3,11 +3,8 @@ import net, { Socket } from 'net';
 const LOCALHOST = '127.0.0.1';
 const DEFAULT_PORT = 9988;
 
-export interface Note {
-	midi: number
-	duration: number
-	velocity?: number
-}
+const DEFAULT_VELOCITY = 100;
+const DEFAULT_DURATION = 1000;
 
 export class FluidSynthClient {
 	private socket: Socket | null = null;
@@ -29,7 +26,7 @@ export class FluidSynthClient {
 		return new Promise((resolve: () => void, reject: (err: Error) => void) => {
 			this.socket = net.createConnection({ host: this.host, port: this.port }, () => {
 				console.log('[FluidSynthClient]: Connected');
-				this.sendLine('prog 0 0'); // set the instrument to piano
+				this.sendLine('prog 0 40'); // set the instrument to piano
 				resolve();
 			});
 			this.socket.once("error", (err) => {
@@ -49,11 +46,15 @@ export class FluidSynthClient {
 		this.socket.write(line + '\n');
 	}
 
-	async playNote(note: Note): Promise<void> {
-		this.sendLine(`noteon ${this.channel} ${note.midi} ${note.velocity}`)
+	async playNote(note: number): Promise<void> {
+		this.sendLine(`noteon ${this.channel} ${note} ${DEFAULT_VELOCITY}`)
 		console.log('Noteon')
-		await new Promise(resolve => setTimeout(resolve, note.duration));
-		this.sendLine(`noteoff ${this.channel} ${note.midi}`);
+		await new Promise(resolve => setTimeout(resolve, DEFAULT_DURATION));
+		this.sendLine(`noteoff ${this.channel} ${note}`);
 		console.log('Noteoff')
+	}
+
+	async playNotes(notes: number[]): Promise<void> {
+		notes.forEach(async (note) => await this.playNote(note));
 	}
 };

@@ -11,11 +11,7 @@ async function main() {
 
 	const ink = render(<App />);
 
-	await synthClient.playNote({
-		midi: 60,
-		duration: 1000,
-		velocity: 100
-	});
+	await synthClient.playNotes([60, 64, 67]);
 
 	const shutdown = () => {
 		ink.unmount();
