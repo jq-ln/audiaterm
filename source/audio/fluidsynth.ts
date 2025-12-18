@@ -46,11 +46,11 @@ export async function startFluidSynth() {
 	socket = net.createConnection({ host: HOST, port: PORT });
 
 	socket.once("error", (err) => {
-		console.error("[Fluidsynth]: connection failed", err);
+		console.error("[FluidSynth]: connection failed", err);
 	})
 
 	socket.once("connect", () => {
-		console.log("[Fluidsynth]: connected");
+		console.log("[FluidSynth]: connected");
 	})
 }
 
@@ -60,6 +60,6 @@ export function stopFluidSynth() {
 
 	socket = null;
 	process = null;
-	console.log("[Fluidsynth]: disconnected");
+	console.log("[FluidSynth]: disconnected");
 }
 
