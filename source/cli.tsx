@@ -19,8 +19,14 @@ async function main() {
 		process.exit(0);
 	}
 
+	// force a resize so fullscreen-ink renders properly
+	setTimeout(() => {
+		process.stdout.emit('resize');
+	}, 50);
+
 	process.on('SIGINT', shutdown);
 	process.on('SIGTERM', shutdown);
 }
 
 main();
+
