@@ -1,10 +1,16 @@
 import net, { Socket } from 'net';
+import { noteMap, NoteName } from './midiMaps.js';
 
 const LOCALHOST = '127.0.0.1';
 const DEFAULT_PORT = 9988;
 
 const DEFAULT_VELOCITY = 100;
 const DEFAULT_DURATION = 1000;
+
+interface Note {
+	name: NoteName,
+	octave: number
+}
 
 export class FluidSynthClient {
 	private socket: Socket | null = null;
@@ -46,15 +52,22 @@ export class FluidSynthClient {
 		this.socket.write(line + '\n');
 	}
 
-	async playNote(note: number): Promise<void> {
-		this.sendLine(`noteon ${this.channel} ${note} ${DEFAULT_VELOCITY}`)
+	async playNote(note: Note): Promise<void> {
+		const noteNumber: number = this.getNoteNumber(note)
+		this.sendLine(`noteon ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY}`)
 		console.log('Noteon')
 		await new Promise(resolve => setTimeout(resolve, DEFAULT_DURATION));
-		this.sendLine(`noteoff ${this.channel} ${note}`);
+		this.sendLine(`noteoff ${this.channel} ${noteNumber}`);
 		console.log('Noteoff')
 	}
 
-	async playNotes(notes: number[]): Promise<void> {
+	async playNotes(notes: Note[]): Promise<void> {
 		notes.forEach(async (note) => await this.playNote(note));
+	}
+
+	getNoteNumber(note: Note): number {
+		const baseNumber: number = noteMap[note.name];
+		const octaveAddition = note.octave * 12;
+		return baseNumber + octaveAddition;
 	}
 };

@@ -1,4 +1,4 @@
-export const notes = {
+export const noteMap = {
 	"C": 12,
 	"C#": 13,
 	"Db": 13,
@@ -17,3 +17,5 @@ export const notes = {
 	"Bb": 22,
 	"B": 23,
 }
+
+export type NoteName = keyof typeof noteMap;
