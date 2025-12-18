@@ -3,6 +3,7 @@ import net, { Socket } from 'net';
 
 const HOST = "127.0.0.1";
 const PORT = 9988
+const SOUNDFONT_PATH = "/usr/share/soundfonts/FluidR3_GM.sf2";
 
 let process: ChildProcess | null = null;
 let socket: Socket | null = null;
@@ -38,7 +39,7 @@ export async function startFluidSynth() {
 		"--server",
 		"--no-shell",
 		"-o", "shell.port=9988",
-		"/usr/share/soundfonts/FluidR3_GM.sf2"
+		SOUNDFONT_PATH
 	]);
 
 	await waitForFluidSynth()
