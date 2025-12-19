@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, Box } from 'ink';
+import { Text, Box, useApp } from 'ink';
 import SelectInput from 'ink-select-input';
 import { IFluidSynthClient } from '../audio/fluidsynthClient.js';
 
@@ -41,10 +41,11 @@ function UpperWindow({ content }: UpperWindowProps) {
 
 interface AppProps {
 	synth: IFluidSynthClient
-	onExit(): void
+	onExit(exit: () => void): void
 }
 
 export default function App({ synth, onExit }: AppProps) {
+	const { exit } = useApp();
 	const defaultContent = "No Selection";
 	const [currentContent, setCurrentContent] = useState<string>(defaultContent);
 
@@ -53,7 +54,8 @@ export default function App({ synth, onExit }: AppProps) {
 			synth.playNote({ name: 'C', octave: 4 });
 			setCurrentContent('Playing Note: C 4')
 		} else if (item.label === "exit") {
-			onExit()
+			// TODO: Is this necessary/best practice?
+			onExit(exit)
 		} else {
 			setCurrentContent(item.value);
 		}

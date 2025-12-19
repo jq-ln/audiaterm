@@ -10,10 +10,10 @@ async function main() {
 	const synth = new FluidSynthClient();
 	await synth.connect();
 
-	const shutdown = () => {
+	const shutdown = (exit: () => void) => {
 		synth.disconnect();
 		stopFluidSynth();
-		process.exit(0);
+		exit();
 	}
 
 	withFullScreen(<App synth={synth} onExit={shutdown} />).start();
