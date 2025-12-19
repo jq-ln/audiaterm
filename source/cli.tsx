@@ -6,16 +6,17 @@ import { FluidSynthClient } from './audio/fluidsynthClient.js';
 
 async function main() {
 	await startFluidSynth()
+
 	const synth = new FluidSynthClient();
 	await synth.connect();
-
-	withFullScreen(<App synth={synth} />).start();
 
 	const shutdown = () => {
 		synth.disconnect();
 		stopFluidSynth();
 		process.exit(0);
 	}
+
+	withFullScreen(<App synth={synth} onExit={shutdown} />).start();
 
 	// force a resize so fullscreen-ink renders properly
 	setTimeout(() => {

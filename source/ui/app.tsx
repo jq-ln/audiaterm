@@ -19,7 +19,8 @@ interface UpperWindowProps {
 const sidebarItems: Item[] = [
 	{ label: 'sidebarItem1', value: 'Sidebar Item 1' },
 	{ label: 'sidebarItem2', value: 'Sidebar Item 2' },
-	{ label: 'synth', value: 'Synth' }
+	{ label: 'synth', value: 'Synth' },
+	{ label: 'exit', value: 'Exit' }
 ]
 
 function Sidebar({ onSelect }: SidebarProps) {
@@ -40,9 +41,10 @@ function UpperWindow({ content }: UpperWindowProps) {
 
 interface AppProps {
 	synth: IFluidSynthClient
+	onExit(): void
 }
 
-export default function App({ synth }: AppProps) {
+export default function App({ synth, onExit }: AppProps) {
 	const defaultContent = "No Selection";
 	const [currentContent, setCurrentContent] = useState<string>(defaultContent);
 
@@ -50,6 +52,8 @@ export default function App({ synth }: AppProps) {
 		if (item.label === 'synth') {
 			synth.playNote({ name: 'C', octave: 4 });
 			setCurrentContent('Playing Note: C 4')
+		} else if (item.label === "exit") {
+			onExit()
 		} else {
 			setCurrentContent(item.value);
 		}
