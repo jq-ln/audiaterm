@@ -50,9 +50,6 @@ export async function startFluidSynth() {
 		console.error("[FluidSynth]: connection failed", err);
 	})
 
-	socket.once("connect", () => {
-		console.log("[FluidSynth]: connected");
-	})
 }
 
 export function stopFluidSynth() {

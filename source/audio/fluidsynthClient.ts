@@ -39,12 +39,10 @@ export class FluidSynthClient {
 	connect(): Promise<void> {
 		return new Promise((resolve: () => void, reject: (err: Error) => void) => {
 			this.socket = net.createConnection({ host: this.host, port: this.port }, () => {
-				console.log('[FluidSynthClient]: Connected');
 				this.sendLine('prog 0 0'); // set the instrument to piano
 				resolve();
 			});
 			this.socket.once("error", (err) => {
-				console.error('[FluidSynthClient]: Connection Failed', err);
 				reject(err);
 			});
 		});
@@ -63,10 +61,8 @@ export class FluidSynthClient {
 	async playNote(note: Note): Promise<void> {
 		const noteNumber: number = this.getNoteNumber(note)
 		this.sendLine(`noteon ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY}`)
-		console.log('Noteon')
 		await new Promise(resolve => setTimeout(resolve, DEFAULT_DURATION));
 		this.sendLine(`noteoff ${this.channel} ${noteNumber}`);
-		console.log('Noteoff')
 	}
 
 	async playNotes(notes: Note[]): Promise<void> {
