@@ -50,14 +50,16 @@ export default function App({ synth, onExit }: AppProps) {
 	const [currentContent, setCurrentContent] = useState<string>(defaultContent);
 
 	const handleSidebarSelect = (item: Item): void => {
-		if (item.label === 'synth') {
-			synth.playNote({ name: 'C', octave: 4 });
-			setCurrentContent('Playing Note: C 4')
-		} else if (item.label === "exit") {
-			// TODO: Is this necessary/best practice?
-			onExit(exit)
-		} else {
-			setCurrentContent(item.value);
+		switch (item.label) {
+			case 'synth':
+				synth.playNote({ name: "C", octave: 4 });
+				setCurrentContent("Playing Note: C4");
+				break;
+			case 'exit':
+				onExit(exit);
+				break;
+			default:
+				setCurrentContent(item.value);
 		}
 	}
 
