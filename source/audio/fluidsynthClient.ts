@@ -7,7 +7,7 @@ const DEFAULT_PORT = 9988;
 const DEFAULT_VELOCITY = 100;
 const DEFAULT_DURATION = 1000;
 
-interface Note {
+export interface Note {
 	name: NoteName,
 	octave: number
 }
