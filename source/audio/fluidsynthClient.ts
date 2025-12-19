@@ -12,6 +12,14 @@ interface Note {
 	octave: number
 }
 
+export interface IFluidSynthClient {
+	connect(): Promise<void>
+	disconnect(): void
+	sendLine(line: string): void
+	playNote(note: Note): void
+	playNotes(notes: Note[]): void
+}
+
 export class FluidSynthClient {
 	private socket: Socket | null = null;
 	private host: string;
@@ -65,7 +73,7 @@ export class FluidSynthClient {
 		notes.forEach(async (note) => await this.playNote(note));
 	}
 
-	getNoteNumber(note: Note): number {
+	private getNoteNumber(note: Note): number {
 		const baseNumber: number = noteMap[note.name];
 		const octaveAddition = note.octave * 12;
 		return baseNumber + octaveAddition;

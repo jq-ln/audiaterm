@@ -1,14 +1,18 @@
 import { Text, Box } from 'ink';
+import { IFluidSynthClient } from '../audio/fluidsynthClient.js';
 
 function Sidebar() {
 	return (
 		<Box flexDirection='column' width={50}>
-			<Text>Sidebar</Text>
 		</Box>
 	)
 }
 
-export default function App() {
+interface AppProps {
+	synth: IFluidSynthClient
+}
+
+export default function App({ synth }: AppProps) {
 	return (
 		<Box>
 			<Sidebar />

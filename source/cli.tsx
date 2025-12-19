@@ -6,15 +6,13 @@ import { FluidSynthClient } from './audio/fluidsynthClient.js';
 
 async function main() {
 	await startFluidSynth()
-	const synthClient = new FluidSynthClient();
-	await synthClient.connect();
+	const synth = new FluidSynthClient();
+	await synth.connect();
 
-	withFullScreen(<App />).start();
-
-	await synthClient.playNote({ name: "C", octave: 4 });
+	withFullScreen(<App synth={synth} />).start();
 
 	const shutdown = () => {
-		synthClient.disconnect();
+		synth.disconnect();
 		stopFluidSynth();
 		process.exit(0);
 	}
