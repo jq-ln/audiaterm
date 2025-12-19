@@ -12,7 +12,7 @@ interface SidebarProps {
 	onSelect(item: Item): void
 }
 
-interface UpperWindowProps {
+interface UpperPaneProps {
 	content: string
 }
 
@@ -20,7 +20,12 @@ const sidebarItems: Item[] = [
 	{ label: 'sidebarItem1', value: 'Sidebar Item 1' },
 	{ label: 'sidebarItem2', value: 'Sidebar Item 2' },
 	{ label: 'synth', value: 'Synth' },
-	{ label: 'exit', value: 'Exit' }
+	{ label: 'exit', value: 'Exit' },
+]
+
+const upperPaneItems: Item[] = [
+	{ label: 'upperPaneItem1', value: 'Upper Pane Item 1' },
+	{ label: 'upperPaneItem2', value: 'Upper Pane Item 2' },
 ]
 
 function Sidebar({ onSelect }: SidebarProps) {
@@ -31,10 +36,15 @@ function Sidebar({ onSelect }: SidebarProps) {
 	)
 }
 
-function UpperWindow({ content }: UpperWindowProps) {
+function UpperPane({ content }: UpperPaneProps) {
+	const handleSelect = (): void => {
+		return;
+	}
+
 	return (
 		<Box flexDirection='row' width={'100%'} height={'100%'} borderStyle={'double'} borderColor={'blue'} paddingLeft={3} paddingRight={3} paddingTop={1} justifyContent='center'>
 			<Text>{content}</Text>
+			<SelectInput items={upperPaneItems} onSelect={handleSelect} isFocused={false} />
 		</Box>
 	)
 }
@@ -46,6 +56,7 @@ interface AppProps {
 
 export default function App({ synth, onExit }: AppProps) {
 	const { exit } = useApp();
+
 	const defaultContent = "No Selection";
 	const [currentContent, setCurrentContent] = useState<string>(defaultContent);
 
@@ -66,7 +77,7 @@ export default function App({ synth, onExit }: AppProps) {
 	return (
 		<Box>
 			<Sidebar onSelect={handleSidebarSelect} />
-			<UpperWindow content={currentContent} />
+			<UpperPane content={currentContent} />
 		</Box>
 	);
 }
