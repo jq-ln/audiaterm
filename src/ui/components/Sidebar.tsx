@@ -1,6 +1,6 @@
 import SelectInput from "ink-select-input"
 import { Box } from "ink"
-import { Item, SidebarProps } from '../../types.js'
+import { Item, SidebarProps } from '../types.js'
 
 const sidebarItems: Item[] = [
 	{ label: 'synth', value: 'Synth' },

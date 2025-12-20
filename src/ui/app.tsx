@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Box, useApp } from 'ink';
 import { UpperPane, MenuMapKey } from './components/UpperPane.js';
 import { Sidebar } from './components/Sidebar.js';
-import { Item, Pane, IFluidSynthClient } from '../types.js'
+import { IFluidSynthClient } from '../types.js'
+import { Item, Pane } from './types.js';
 
 export interface AppProps {
 	synth: IFluidSynthClient

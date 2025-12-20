@@ -1,5 +1,6 @@
 import { Box, Text } from "ink";
-import { MenuComponent, PanePropsWithSynth, Item, Note } from "../../types.js";
+import { MenuComponent, PanePropsWithSynth, Item } from "../types.js";
+import { Note } from "../../types.js";
 import SelectInput from "ink-select-input";
 
 export type MenuMapKey = keyof typeof menuMap;
