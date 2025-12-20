@@ -1,4 +1,3 @@
-    process running. src/cli.tsx:13, src/cli.tsx:26
   - [Medium] playNotes uses forEach with async, so the method resolves immediately and errors/order are lost; if you expect sequential playback or a returned promise that
     completes after all notes, this is a logic bug. src/audio/fluidsynthClient.ts:56
   - [Medium] startFluidSynth opens a socket (socket = net.createConnection) that is never used and lacks child process error/exit handling; this can leak a connection and obscure
