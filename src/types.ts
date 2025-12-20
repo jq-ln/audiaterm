@@ -1,4 +1,4 @@
-import { Note } from "./domain/notes"
+import { Note } from './domain/notes.js';
 
 export interface FluidSynthApi {
 	connect(): Promise<void>

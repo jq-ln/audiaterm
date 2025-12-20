@@ -19,7 +19,7 @@ export default function App({ synth, onExit }: AppProps) {
 	const [focusedPane, setFocusedPane] = useState<Pane>(defaultFocusedPane);
 
 	const handleSidebarSelect = async (item: Item): Promise<void> => {
-		switch (item.label) {
+		switch (item.value) {
 			case 'synth':
 				setFocusedPane('upper');
 				setCurrentMenu('synth')
