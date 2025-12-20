@@ -5,7 +5,7 @@ const HOST = "127.0.0.1";
 const PORT = 9988
 const SOUNDFONT_PATH = "/usr/share/soundfonts/FluidR3_GM.sf2";
 
-let process: ChildProcess | null = null;
+let fluidSynthProcess: ChildProcess | null = null;
 let socket: Socket | null = null;
 
 function waitForFluidSynth(timeout = 5000): Promise<Socket> {
@@ -34,7 +34,7 @@ function waitForFluidSynth(timeout = 5000): Promise<Socket> {
 }
 
 export async function startFluidSynth() {
-	process = spawn("fluidsynth", [
+	fluidSynthProcess = spawn("fluidsynth", [
 		"--audio-driver=pipewire",
 		"--server",
 		"--no-shell",
@@ -52,10 +52,10 @@ export async function startFluidSynth() {
 
 export function stopFluidSynth() {
 	socket?.end()
-	process?.kill('SIGTERM')
+	fluidSynthProcess?.kill('SIGTERM')
 
 	socket = null;
-	process = null;
+	fluidSynthProcess = null;
 	console.log("[FluidSynth]: disconnected");
 }
 
