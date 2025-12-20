@@ -9,6 +9,11 @@ export interface UpperPaneProps extends PanePropsWithSynth {
 	menuLabel: MenuMapKey
 }
 
+const menuMap: Record<string, MenuComponent> = {
+	'none': DefaultMenu,
+	'synth': SynthMenu,
+}
+
 function DefaultMenu() {
 	return (
 		<Text>No Selection</Text>
@@ -18,31 +23,37 @@ function DefaultMenu() {
 const synthMenuItems: Item[] = [
 	{ label: 'playNote', value: 'Play Note' },
 	{ label: 'playInterval', value: 'PlayInterval' },
+	{ label: 'playChord', value: 'Play Chord' },
 	{ label: 'back', value: 'Back' }
 ]
 
 function SynthMenu({ synth, isFocused, onUnfocus }: PanePropsWithSynth) {
-	const rootNote: Note = { name: 'C', octave: 4 }
+	const rootNote: Note = { name: 'C', octave: 4 };
+	const intervalNote: Note = { name: 'E', octave: 4 };
+	const chordNote: Note = { name: 'G', octave: 4 };
+
 	const handleSelect = (item: Item): void => {
 		switch (item.label) {
 			case 'playNote':
 				synth.playNote(rootNote);
+				break;
+			case 'playInterval':
+				synth.playNotes([rootNote, intervalNote]);
+				break;
+			case 'playChord':
+				synth.playNotes([rootNote, intervalNote, chordNote]);
 				break;
 			case 'back':
 				onUnfocus();
 				break;
 		}
 	}
+
 	return (
 		<>
 			<SelectInput items={synthMenuItems} isFocused={isFocused} onSelect={handleSelect} />
 		</>
-	)
-}
-
-const menuMap: Record<string, MenuComponent> = {
-	'none': DefaultMenu,
-	'synth': SynthMenu,
+	);
 }
 
 export function UpperPane({ synth, menuLabel, isFocused, onUnfocus }: UpperPaneProps) {
