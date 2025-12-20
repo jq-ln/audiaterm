@@ -3,8 +3,8 @@ import { Box } from "ink"
 import { Item, SidebarProps } from '../types.js'
 
 const sidebarItems: Item[] = [
-	{ label: 'synth', value: 'Synth' },
-	{ label: 'exit', value: 'Exit' },
+	{ value: 'synth', label: 'Synth' },
+	{ value: 'exit', label: 'Exit' },
 ]
 
 export function Sidebar({ onSelect, isFocused }: SidebarProps) {

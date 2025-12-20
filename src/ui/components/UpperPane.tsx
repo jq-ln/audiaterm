@@ -21,10 +21,10 @@ function DefaultMenu() {
 }
 
 const synthMenuItems: Item[] = [
-	{ label: 'playNote', value: 'Play Note' },
-	{ label: 'playInterval', value: 'PlayInterval' },
-	{ label: 'playChord', value: 'Play Chord' },
-	{ label: 'back', value: 'Back' }
+	{ value: 'playNote', label: 'Play Note' },
+	{ value: 'playInterval', label: 'PlayInterval' },
+	{ value: 'playChord', label: 'Play Chord' },
+	{ value: 'back', label: 'Back' }
 ]
 
 function SynthMenu({ synth, isFocused, onUnfocus }: PanePropsWithSynth) {
@@ -33,7 +33,7 @@ function SynthMenu({ synth, isFocused, onUnfocus }: PanePropsWithSynth) {
 	const chordNote: Note = { name: 'G', octave: 4 };
 
 	const handleSelect = (item: Item): void => {
-		switch (item.label) {
+		switch (item.value) {
 			case 'playNote':
 				synth.playNote(rootNote);
 				break;
