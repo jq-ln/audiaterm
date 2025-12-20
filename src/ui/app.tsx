@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, useApp } from 'ink';
-import { UpperPane, MenuMapKey } from './componenets/UpperPane.js';
-import { Sidebar } from './componenets/Sidebar.js';
+import { UpperPane, MenuMapKey } from './components/UpperPane.js';
+import { Sidebar } from './components/Sidebar.js';
 import { Item, Pane, IFluidSynthClient } from '../types.js'
 
 export interface AppProps {

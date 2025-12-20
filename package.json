@@ -8,11 +8,11 @@
 		"node": ">=25"
 	},
 	"scripts": {
-		"cli": "node ./dist/source/cli.js",
+		"cli": "node ./dist/src/cli.js",
 		"build": "tsc",
 		"dev": "tsc --watch",
 		"test": "ava",
-		"lint": "eslint source"
+		"lint": "eslint src"
 	},
 	"files": [
 		"dist"
