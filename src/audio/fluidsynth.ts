@@ -15,7 +15,6 @@ function waitForFluidSynth(timeout = 5000): Promise<Socket> {
 		function tryConnect() {
 			const sock = new net.Socket();
 			sock.once("connect", () => {
-				sock.destroy();
 				resolve(sock);
 			});
 			sock.once("error", () => {
@@ -42,7 +41,18 @@ export async function startFluidSynth() {
 		SOUNDFONT_PATH
 	]);
 
-	socket = await waitForFluidSynth()
+	fluidSynthProcess.stderr?.on("data", (data: Buffer) => {
+		console.error(`[FluidSynth]: ${data.toString().trim()}`);
+	});
+
+	const exitPromise = new Promise<Socket>((_resolve, reject) => {
+		fluidSynthProcess?.once("error", (err) => reject(err));
+		fluidSynthProcess?.once("exit", (code, signal) => {
+			reject(new Error(`[FluidSynth]: exited before ready (code=${code ?? "null"}, signal=${signal ?? "null"})`));
+		});
+	});
+
+	socket = await Promise.race([waitForFluidSynth(), exitPromise]);
 
 	socket.once("error", (err) => {
 		console.error("[FluidSynth]: connection failed", err);
@@ -58,4 +68,3 @@ export function stopFluidSynth() {
 	fluidSynthProcess = null;
 	console.log("[FluidSynth]: disconnected");
 }
-
