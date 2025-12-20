@@ -1,4 +1,4 @@
-import { NoteName } from './audio/midiMaps.js';
+import { Note } from "./domain/notes"
 
 export interface FluidSynthApi {
 	connect(): Promise<void>
@@ -7,10 +7,5 @@ export interface FluidSynthApi {
 	sendLines(lines: string[]): void
 	playNote(note: Note): Promise<void>
 	playNotes(notes: Note[]): Promise<void>
-}
-
-export interface Note {
-	name: NoteName,
-	octave: number
 }
 

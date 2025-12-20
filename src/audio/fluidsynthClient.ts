@@ -1,6 +1,5 @@
 import net, { Socket } from 'net';
-import { noteMap } from './midiMaps.js';
-import { Note } from '../types.js';
+import { notes, Note } from '../domain/notes.js';
 
 const LOCALHOST = '127.0.0.1';
 const DEFAULT_PORT = 9988;
@@ -76,7 +75,7 @@ export class FluidSynthClient {
 	}
 
 	private getNoteNumber(note: Note): number {
-		const baseNumber: number = noteMap[note.name];
+		const baseNumber: number = notes[note.name];
 		const octaveAddition = note.octave * 12;
 		return baseNumber + octaveAddition;
 	}

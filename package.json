@@ -1,8 +1,8 @@
 {
-	"name": "ink-demo",
+	"name": "audiaterm",
 	"version": "0.0.0",
 	"license": "MIT",
-	"bin": "dist/cli.js",
+	"bin": "dist/src/cli.js",
 	"type": "module",
 	"engines": {
 		"node": ">=25"

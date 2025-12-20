@@ -13,4 +13,4 @@ On Arch:
 sudo pacman -Sy fluidsynth soundfont-fluid
 ```
 
-The constant `SOUNDFONT_PATH` in `./source/audio/fluidsynth.ts` can be updated with the device-specific path to the soundfont (this will be improved later).
+The constant `SOUNDFONT_PATH` in `./src/audio/fluidsynth.ts` can be updated with the device-specific path to the soundfont (this will be improved later).
