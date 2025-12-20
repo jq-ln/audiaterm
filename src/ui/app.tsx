@@ -7,7 +7,7 @@ import { Item, Pane } from './types.js';
 
 export interface AppProps {
 	synth: IFluidSynthClient
-	onExit(exit: () => void): void
+	onExit(): void
 }
 
 export default function App({ synth, onExit }: AppProps) {
@@ -25,7 +25,8 @@ export default function App({ synth, onExit }: AppProps) {
 				setCurrentMenu('synth')
 				break;
 			case 'exit':
-				onExit(exit);
+				onExit();
+				exit();
 				break;
 			default:
 				break;
