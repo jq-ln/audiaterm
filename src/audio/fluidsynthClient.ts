@@ -72,7 +72,7 @@ export class FluidSynthClient {
 	private formatNoteLine(note: Note, on: boolean): string {
 		const command = on ? 'noteon' : 'noteoff';
 		const noteNumber = this.getNoteNumber(note);
-		return `${command} ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY} `;
+		return `${command} ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY}`;
 	}
 
 	private getNoteNumber(note: Note): number {
