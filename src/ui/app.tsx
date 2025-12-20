@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Box, useApp } from 'ink';
-import { UpperPane, MenuMapKey } from './components/UpperPane.js';
+import { UpperPane, MenuValue } from './components/UpperPane.js';
 import { Sidebar } from './components/Sidebar.js';
-import { IFluidSynthClient } from '../types.js'
+import { FluidSynthApi } from '../types.js'
 import { Item, Pane } from './types.js';
 
 export interface AppProps {
-	synth: IFluidSynthClient
+	synth: FluidSynthApi
 	onExit(): Promise<void>
 }
 
@@ -15,7 +15,7 @@ export default function App({ synth, onExit }: AppProps) {
 	const defaultFocusedPane = 'sidebar';
 	const noMenu = 'none';
 
-	const [currentMenu, setCurrentMenu] = useState<MenuMapKey>(noMenu);
+	const [currentMenu, setCurrentMenu] = useState<MenuValue>(noMenu);
 	const [focusedPane, setFocusedPane] = useState<Pane>(defaultFocusedPane);
 
 	const handleSidebarSelect = async (item: Item): Promise<void> => {

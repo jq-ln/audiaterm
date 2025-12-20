@@ -3,16 +3,16 @@ import { MenuComponent, PanePropsWithSynth, Item } from "../types.js";
 import { Note } from "../../types.js";
 import SelectInput from "ink-select-input";
 
-export type MenuMapKey = keyof typeof menuMap;
+export type MenuValue = keyof typeof menuMap;
 
 export interface UpperPaneProps extends PanePropsWithSynth {
-	menuLabel: MenuMapKey
+	menuLabel: MenuValue
 }
 
-const menuMap: Record<string, MenuComponent> = {
+const menuMap = {
 	'none': DefaultMenu,
 	'synth': SynthMenu,
-}
+} as const;
 
 function DefaultMenu() {
 	return (

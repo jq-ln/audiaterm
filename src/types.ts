@@ -1,6 +1,6 @@
 import { NoteName } from './audio/midiMaps.js';
 
-export interface IFluidSynthClient {
+export interface FluidSynthApi {
 	connect(): Promise<void>
 	disconnect(): void
 	sendLine(line: string): void

@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { IFluidSynthClient } from '../types.js';
+import { FluidSynthApi } from '../types.js';
 
 export interface Item {
 	label: string
@@ -12,7 +12,7 @@ export interface PaneProps {
 }
 
 export interface PanePropsWithSynth extends PaneProps {
-	synth: IFluidSynthClient
+	synth: FluidSynthApi
 }
 
 export interface SidebarProps extends PaneProps {
