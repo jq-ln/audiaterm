@@ -8,15 +8,15 @@ const SOUNDFONT_PATH = "/usr/share/soundfonts/FluidR3_GM.sf2";
 let process: ChildProcess | null = null;
 let socket: Socket | null = null;
 
-function waitForFluidSynth(timeout = 5000): Promise<void> {
-	return new Promise((resolve, reject) => {
+function waitForFluidSynth(timeout = 5000): Promise<Socket> {
+	return new Promise<Socket>((resolve, reject) => {
 		const start = Date.now();
 
 		function tryConnect() {
 			const sock = new net.Socket();
 			sock.once("connect", () => {
 				sock.destroy();
-				resolve();
+				resolve(sock);
 			});
 			sock.once("error", () => {
 				sock.destroy();
@@ -42,9 +42,7 @@ export async function startFluidSynth() {
 		SOUNDFONT_PATH
 	]);
 
-	await waitForFluidSynth()
-
-	socket = net.createConnection({ host: HOST, port: PORT });
+	socket = await waitForFluidSynth()
 
 	socket.once("error", (err) => {
 		console.error("[FluidSynth]: connection failed", err);
