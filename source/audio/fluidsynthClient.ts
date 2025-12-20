@@ -1,24 +1,12 @@
 import net, { Socket } from 'net';
-import { noteMap, NoteName } from './midiMaps.js';
+import { noteMap } from './midiMaps.js';
+import { Note } from '../types.js';
 
 const LOCALHOST = '127.0.0.1';
 const DEFAULT_PORT = 9988;
 
 const DEFAULT_VELOCITY = 100;
 const DEFAULT_DURATION = 1000;
-
-export interface Note {
-	name: NoteName,
-	octave: number
-}
-
-export interface IFluidSynthClient {
-	connect(): Promise<void>
-	disconnect(): void
-	sendLine(line: string): void
-	playNote(note: Note): void
-	playNotes(notes: Note[]): void
-}
 
 export class FluidSynthClient {
 	private socket: Socket | null = null;

@@ -18,7 +18,7 @@ function waitForFluidSynth(timeout = 5000): Promise<void> {
 				sock.destroy();
 				resolve();
 			});
-			sock.once("error", (_err) => {
+			sock.once("error", () => {
 				sock.destroy();
 				if (Date.now() - start > timeout) {
 					reject(new Error("Timeout waiting for FluidSynth"));
