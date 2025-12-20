@@ -7,7 +7,7 @@ import { Item, Pane } from './types.js';
 
 export interface AppProps {
 	synth: IFluidSynthClient
-	onExit(): void
+	onExit(): Promise<void>
 }
 
 export default function App({ synth, onExit }: AppProps) {
@@ -18,14 +18,14 @@ export default function App({ synth, onExit }: AppProps) {
 	const [currentMenu, setCurrentMenu] = useState<MenuMapKey>(noMenu);
 	const [focusedPane, setFocusedPane] = useState<Pane>(defaultFocusedPane);
 
-	const handleSidebarSelect = (item: Item): void => {
+	const handleSidebarSelect = async (item: Item): Promise<void> => {
 		switch (item.label) {
 			case 'synth':
 				setFocusedPane('upper');
 				setCurrentMenu('synth')
 				break;
 			case 'exit':
-				onExit();
+				await onExit();
 				exit();
 				break;
 			default:

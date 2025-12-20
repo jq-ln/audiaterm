@@ -1,21 +1,21 @@
 import { spawn, ChildProcess } from "node:child_process";
-import net, { Socket } from 'net';
+import net from 'net';
 
 const HOST = "127.0.0.1";
 const PORT = 9988
 const SOUNDFONT_PATH = "/usr/share/soundfonts/FluidR3_GM.sf2";
 
 let fluidSynthProcess: ChildProcess | null = null;
-let socket: Socket | null = null;
 
-function waitForFluidSynth(timeout = 5000): Promise<Socket> {
-	return new Promise<Socket>((resolve, reject) => {
+function waitForFluidSynth(timeout = 5000): Promise<void> {
+	return new Promise<void>((resolve, reject) => {
 		const start = Date.now();
 
 		function tryConnect() {
 			const sock = new net.Socket();
 			sock.once("connect", () => {
-				resolve(sock);
+				sock.destroy();
+				resolve();
 			});
 			sock.once("error", () => {
 				sock.destroy();
@@ -45,26 +45,32 @@ export async function startFluidSynth() {
 		console.error(`[FluidSynth]: ${data.toString().trim()}`);
 	});
 
-	const exitPromise = new Promise<Socket>((_resolve, reject) => {
+	const exitPromise = new Promise<void>((_resolve, reject) => {
 		fluidSynthProcess?.once("error", (err) => reject(err));
 		fluidSynthProcess?.once("exit", (code, signal) => {
 			reject(new Error(`[FluidSynth]: exited before ready (code=${code ?? "null"}, signal=${signal ?? "null"})`));
 		});
 	});
 
-	socket = await Promise.race([waitForFluidSynth(), exitPromise]);
-
-	socket.once("error", (err) => {
-		console.error("[FluidSynth]: connection failed", err);
-	})
+	await Promise.race([waitForFluidSynth(), exitPromise]);
 
 }
 
-export function stopFluidSynth() {
-	socket?.end()
-	fluidSynthProcess?.kill('SIGTERM')
-
-	socket = null;
+export async function stopFluidSynth(): Promise<void> {
+	const currentProcess = fluidSynthProcess;
 	fluidSynthProcess = null;
+	if (!currentProcess) return;
+
+	const exitPromise = new Promise<void>((resolve) => {
+		currentProcess.once("exit", () => resolve());
+	});
+
+	currentProcess.kill('SIGTERM');
+	const killTimeout = setTimeout(() => {
+		currentProcess.kill('SIGKILL');
+	}, 2000);
+
+	await exitPromise;
+	clearTimeout(killTimeout);
 	console.log("[FluidSynth]: disconnected");
 }

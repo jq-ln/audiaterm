@@ -16,7 +16,7 @@ export interface PanePropsWithSynth extends PaneProps {
 }
 
 export interface SidebarProps extends PaneProps {
-	onSelect(item: Item): void
+	onSelect(item: Item): void | Promise<void>
 }
 
 export type MenuComponent = ComponentType<PanePropsWithSynth>

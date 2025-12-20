@@ -10,12 +10,12 @@ async function main() {
 	const synth = new FluidSynthClient();
 	await synth.connect();
 
-	const shutdown = () => {
+	const shutdown = async () => {
 		synth.disconnect();
-		stopFluidSynth();
+		await stopFluidSynth();
 	}
-	const exitApp = () => {
-		shutdown();
+	const exitApp = async () => {
+		await shutdown();
 		process.exit(0);
 	}
 
@@ -26,8 +26,8 @@ async function main() {
 		process.stdout.emit('resize');
 	}, 50);
 
-	process.on('SIGINT', exitApp);
-	process.on('SIGTERM', exitApp);
+	process.on('SIGINT', () => void exitApp());
+	process.on('SIGTERM', () => void exitApp());
 }
 
 main();
