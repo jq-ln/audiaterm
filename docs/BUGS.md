@@ -1,2 +1,1 @@
-  - [Low] Empty modules look like dead code or half‑implemented features. src/state/store.ts, src/utils/shutdown.ts
   - [Low] Hard‑coded soundfont path and audio driver reduce portability and make config/testing harder. src/audio/fluidsynth.ts:6, src/audio/fluidsynth.ts:38
