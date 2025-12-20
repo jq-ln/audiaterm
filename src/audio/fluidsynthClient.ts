@@ -46,15 +46,33 @@ export class FluidSynthClient {
 		this.socket.write(line + '\n');
 	}
 
+	sendLines(lines: string[]): void {
+		const singleLine = lines.join('\n');
+		this.sendLine(singleLine);
+	}
+
 	async playNote(note: Note): Promise<void> {
-		const noteNumber: number = this.getNoteNumber(note)
-		this.sendLine(`noteon ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY}`)
+		const onLine = this.formatNoteLine(note, true);
+		const offLine = this.formatNoteLine(note, false);
+
+		this.sendLine(onLine);
 		await new Promise(resolve => setTimeout(resolve, DEFAULT_DURATION));
-		this.sendLine(`noteoff ${this.channel} ${noteNumber}`);
+		this.sendLine(offLine);
 	}
 
 	async playNotes(notes: Note[]): Promise<void> {
-		notes.forEach(async (note) => await this.playNote(note));
+		const onLines = notes.map((note: Note) => this.formatNoteLine(note, true));
+		const offLines = notes.map((note: Note) => this.formatNoteLine(note, false));
+
+		this.sendLines(onLines);
+		await new Promise(resolve => setTimeout(resolve, DEFAULT_DURATION));
+		this.sendLines(offLines);
+	}
+
+	private formatNoteLine(note: Note, on: boolean): string {
+		const command = on ? 'noteon' : 'noteoff';
+		const noteNumber = this.getNoteNumber(note);
+		return `${command} ${this.channel} ${noteNumber} ${DEFAULT_VELOCITY} `;
 	}
 
 	private getNoteNumber(note: Note): number {
